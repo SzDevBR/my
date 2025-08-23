@@ -1,102 +1,356 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR" data-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Octávio Silva - Portfólio</title>
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="icon" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/svgs/solid/robot.svg" />
-  <style>
-    body {
-      font-family: 'Inter', 'Roboto', Arial, sans-serif;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Octávio Silva Mascarenhas | Portfólio</title>
+  <!-- SEO & Open Graph -->
+  <meta name="description" content="Portfólio de Octávio Mascarenhas: Node.js, automação para comércio, UW Cloud Apps.">
+  <meta property="og:title" content="Octávio Mascarenhas| Portfólio">
+  <meta property="og:description" content="Node.js, automação para comércio, UW Cloud Apps.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/avatar-cyber.png">
+  <meta property="og:url" content="https://szbrdev.github.io/">
+  <link rel="canonical" href="https://szbrdev.github.io/">
+  <!-- JSON-LD Person + WebSite -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Octávio Mascarenhas",
+    "url": "https://szbrdev.github.io/",
+    "image": "assets/avatar-cyber.png",
+    "sameAs": [
+      "https://github.com/SzBrDev",
+      "https://instagram.com/octaviouwx"
+    ],
+    "email": "mailto:silvaoctavio.23@gmail.com",
+    "jobTitle": "Desenvolvedor Node.js"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Portfólio Octávio Silva Mascarenhas",
+    "url": "https://szbrdev.github.io/"
+  }
+  </script>
+  <!-- Tailwind CSS CDN (com safelist para animações) -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Fontes -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- Lenis (smooth scroll) -->
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.38/bundled/lenis.min.js"></script>
+  <!-- tsParticles -->
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@3.3.0/tsparticles.bundle.min.js"></script>
+  <!-- Lottie -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
 </head>
-<body class="bg-gray-900 text-white font-sans">
-
-  <!-- Header -->
-  <header class="bg-gradient-to-r from-purple-800 to-indigo-900 p-6 flex items-center justify-between shadow-lg">
-    <h1 class="text-3xl font-bold flex items-center gap-3">
-      <i class="fas fa-robot text-purple-400 drop-shadow-lg"></i>
-      Octávio Silva Mascarenhas
-    </h1>
-    <div class="flex gap-4">
-      <a href="mailto:silvaoctavio.23@gmail.com" class="bg-white text-purple-800 px-4 py-2 rounded hover:bg-gray-200 transition font-semibold shadow">Contato</a>
-      <a href="https://github.com/SzBrDev" target="_blank" class="bg-purple-900 text-white px-4 py-2 rounded hover:bg-purple-700 transition font-semibold flex items-center gap-2">
-        <i class="fab fa-github"></i> GitHub
-      </a>
+<body class="bg-bg text-text font-body antialiased overflow-x-hidden">
+  <!-- Loader (Lottie) -->
+  <div id="loader" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-bg transition-opacity duration-500">
+    <div id="lottie-bot" class="w-24 h-24 mb-6" aria-label="Carregando mascote"></div>
+    <div class="w-48 h-2 bg-surface rounded-lg overflow-hidden mb-2">
+      <div id="loader-bar" class="h-full bg-primary transition-all duration-700" style="width:0%"></div>
     </div>
+    <span class="text-muted text-sm">Carregando...</span>
+    <!-- Fallback CSS loader -->
+    <noscript>
+      <div class="w-24 h-24 flex items-center justify-center">
+        <i class="fa-solid fa-robot fa-3x text-primary animate-bounce"></i>
+      </div>
+    </noscript>
+  </div>
+
+  <!-- Header/Nav -->
+  <header id="header" class="fixed top-0 left-0 w-full z-40 bg-bg/80 backdrop-blur transition-shadow">
+    <nav class="max-w-5xl mx-auto flex items-center justify-between px-4 py-2" aria-label="Navegação principal">
+      <a href="#hero" class="flex items-center gap-2 focus:outline-primary" aria-label="Ir para início">
+        <span id="bot-mascot" class="text-primary text-2xl" tabindex="0" aria-label="Mascote robô" role="img">
+          <i class="fa-solid fa-robot"></i>
+        </span>
+        <span class="font-display font-bold text-lg hidden sm:inline">Octávio</span>
+      </a>
+      <ul class="flex gap-4" id="nav-links">
+        <li><a href="#about" class="nav-link" tabindex="0">Sobre</a></li>
+        <li><a href="#projects" class="nav-link" tabindex="0">Projetos</a></li>
+        <li><a href="#skills" class="nav-link" tabindex="0">Habilidades</a></li>
+        <li><a href="#testimonials" class="nav-link" tabindex="0">Depoimentos</a></li>
+        <li><a href="#contact" class="nav-link" tabindex="0">Contato</a></li>
+      </ul>
+      <button id="theme-toggle" class="ml-2 p-2 rounded-lg text-neon focus:outline-primary" aria-label="Alternar tema" title="Alternar tema">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+      <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-primary text-bg px-3 py-1 rounded-lg z-50">Pular para conteúdo</a>
+    </nav>
   </header>
 
-  <!-- Sobre mim -->
-  <section class="p-8 max-w-3xl mx-auto">
-    <h2 class="text-2xl font-bold mb-2 text-purple-300">Sobre mim</h2>
-    <p>Desenvolvedor apaixonado por tecnologia, especializado em <strong>Node.js</strong>, automação para comércio e sistemas avançados de pedidos. Criativo, autodidata, focado em soluções escaláveis e eficientes.</p>
-  </section>
+  <!-- Main Content -->
+  <main id="main-content" tabindex="-1" class="pt-20">
+    <!-- Hero -->
+    <section id="hero" class="relative min-h-[80vh] flex flex-col items-center justify-center text-center overflow-hidden">
+      <div id="particles-hero" class="absolute inset-0 -z-10"></div>
+      <h1 class="font-display text-4xl sm:text-5xl md:text-6xl font-bold mb-4 tracking-tight drop-shadow-glow">
+        Octávio Silva Mascarenhas
+      </h1>
+      <span class="inline-block bg-surface/80 text-primaryAlt font-semibold rounded-xl px-4 py-1 mb-4 text-base sm:text-lg shadow-soft">
+        Node.js / Automação / UW Cloud Apps
+      </span>
+      <p class="text-lg sm:text-xl text-muted mb-8">Node.js • Automação para Comércio • UW Cloud Apps</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#projects" class="btn-primary ripple" aria-label="Ver Projetos">Ver Projetos</a>
+        <a href="https://wa.me/5562998641905" target="_blank" rel="noopener" class="btn-secondary ripple" aria-label="Chamar no WhatsApp">
+          <i class="fa-brands fa-whatsapp mr-2"></i>Chamar no WhatsApp
+        </a>
+      </div>
+    </section>
 
-  <!-- Competências Técnicas -->
-  <section class="p-8 bg-gradient-to-r from-purple-900 to-indigo-800 rounded-xl my-6 max-w-3xl mx-auto shadow-lg">
-    <h2 class="text-2xl font-bold mb-2 text-purple-200">Competências Técnicas</h2>
-    <ul class="list-disc ml-5 space-y-2">
-      <li>Node.js – Backend, APIs, integrações</li>
-      <li>JavaScript Avançado – Web + Server</li>
-      <li>Tailwind CSS – UI moderna, minimalista</li>
-      <li>Bancos de Dados – SQL / NoSQL / MongoDB</li>
-      <li>Sistemas Comerciais – caixa, pedidos, estoque</li>
-      <li>Hospedagem em Node.js / DevOps básico</li>
-      <li>Automação e Robótica – Arduino, sensores, prototipagem</li>
-    </ul>
-  </section>
-
-  <!-- Projetos -->
-  <section class="p-8 max-w-3xl mx-auto">
-    <h2 class="text-2xl font-bold mb-2 text-purple-300">Projetos</h2>
-    <div class="space-y-4">
-      <div>
-        <h3 class="font-semibold text-purple-400 flex items-center gap-2">
-          <i class="fas fa-cloud"></i> UW Cloud Apps
-        </h3>
-        <p>Plataforma de hospedagem Node.js, backend completo, interface de gestão. Estilo visual inspirado no ícone <i class="fas fa-robot"></i> Font Awesome, cor roxa.</p>
+    <!-- Sobre mim -->
+    <section id="about" class="max-w-4xl mx-auto py-20 px-4 flex flex-col md:flex-row items-center gap-10">
+      <div class="flex-shrink-0">
+        <img src="assets/avatar-cyber.png" alt="Avatar futurista de Octávio" class="w-40 h-40 rounded-xl shadow-soft object-cover bg-surface" loading="lazy">
       </div>
       <div>
-        <h3 class="font-semibold text-purple-400 flex items-center gap-2">
-          <i class="fas fa-cash-register"></i> Sistemas Comerciais
-        </h3>
-        <p>Criação de sistemas de caixa, pedidos, integração com WhatsApp e ferramentas de marketing digital para restaurantes e bares.</p>
+        <h2 class="font-display text-3xl font-bold mb-4 text-primary">Sobre mim</h2>
+        <p class="text-lg mb-4">
+          Sou desenvolvedor focado em <strong>Node.js</strong> e <strong>automação para comércio</strong>, criador da <strong>UW Cloud Apps</strong> (hospedagem em Node.js). Construo <strong>sistemas de caixa, pedidos e ferramentas para lojas</strong>, sempre com <strong>Tailwind</strong> e abordagem minimalista de performance. Autodidata, direto ao ponto e apaixonado por colocar soluções no ar.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <span class="chip">Node.js</span>
+          <span class="chip">Tailwind</span>
+          <span class="chip">Automação</span>
+          <span class="chip">Sistemas de Caixa/Pedidos</span>
+        </div>
       </div>
-      <div>
-        <h3 class="font-semibold text-purple-400 flex items-center gap-2">
-          <i class="fas fa-bolt"></i> Marketing + Automação
-        </h3>
-        <p>Ferramentas para tráfego pago e integração de campanhas digitais com sistemas de pedidos.</p>
+    </section>
+
+    <!-- Projetos -->
+    <section id="projects" class="bg-surface/80 py-20 px-4">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="font-display text-3xl font-bold mb-10 text-primary text-center">Projetos</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Card 1 -->
+          <div class="project-card" tabindex="0" data-project="uwcloud">
+            <div class="card-inner">
+              <div class="card-front flex flex-col items-center justify-center">
+                <img src="assets/uwcloud-logo.svg" alt="UW Cloud Apps" class="w-16 h-16 mb-4" loading="lazy">
+                <h3 class="font-bold text-lg mb-2">UW Cloud Apps</h3>
+                <span class="text-muted text-sm">Hospedagem Node.js</span>
+              </div>
+              <div class="card-back flex flex-col items-center justify-center">
+                <span class="font-semibold text-primary">Ver detalhes</span>
+              </div>
+            </div>
+          </div>
+          <!-- Card 2 -->
+          <div class="project-card" tabindex="0" data-project="pdv">
+            <div class="card-inner">
+              <div class="card-front flex flex-col items-center justify-center">
+                <img src="assets/pdv.svg" alt="Sistema de Caixa & Pedidos" class="w-16 h-16 mb-4" loading="lazy">
+                <h3 class="font-bold text-lg mb-2">Sistema de Caixa & Pedidos</h3>
+                <span class="text-muted text-sm">PDV, Estoque, Relatórios</span>
+              </div>
+              <div class="card-back flex flex-col items-center justify-center">
+                <span class="font-semibold text-primary">Ver detalhes</span>
+              </div>
+            </div>
+          </div>
+          <!-- Card 3 -->
+          <div class="project-card" tabindex="0" data-project="restaurantes">
+            <div class="card-inner">
+              <div class="card-front flex flex-col items-center justify-center">
+                <img src="assets/restaurant.svg" alt="Ferramentas para Restaurantes" class="w-16 h-16 mb-4" loading="lazy">
+                <h3 class="font-bold text-lg mb-2">Ferramentas para Restaurantes</h3>
+                <span class="text-muted text-sm">Pedidos WhatsApp, Campanhas</span>
+              </div>
+              <div class="card-back flex flex-col items-center justify-center">
+                <span class="font-semibold text-primary">Ver detalhes</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
+      <!-- Modal de Projeto -->
+      <div id="project-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-bg/80 backdrop-blur-lg hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-content bg-surface rounded-xl shadow-soft max-w-lg w-full p-6 relative scale-95 opacity-0 transition-all duration-300">
+          <button id="modal-close" class="absolute top-3 right-3 text-muted hover:text-primary focus:outline-primary" aria-label="Fechar modal">
+            <i class="fa-solid fa-xmark fa-lg"></i>
+          </button>
+          <div id="modal-body">
+            <!-- Conteúdo dinâmico via JS -->
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <!-- Formação -->
-  <section class="p-8 bg-gradient-to-r from-purple-900 to-indigo-800 rounded-xl my-6 max-w-3xl mx-auto shadow-lg">
-    <h2 class="text-2xl font-bold mb-2 text-purple-200">Formação</h2>
-    <ul class="list-disc ml-5 space-y-2">
-      <li>Ensino Médio (cursando) – Colégio Estadual Waldemar D Paula Cavalcante</li>
-      <li>Ensino Fundamental Completo – Escola Municipal Pedro Ludovico Teixeira</li>
-      <li>Automação e Robótica – Start (Módulo 3/3)</li>
-      <li>Programação JavaScript/Node.js Web + Server (2019)</li>
-    </ul>
-  </section>
+    <!-- Habilidades -->
+    <section id="skills" class="max-w-5xl mx-auto py-20 px-4">
+      <h2 class="font-display text-3xl font-bold mb-10 text-primary text-center">Habilidades</h2>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8">
+        <!-- Cada skill: ícone, nome, barra, tooltip -->
+        <div class="skill-card group" tabindex="0" data-skill="Node.js">
+          <i class="fa-brands fa-node-js text-3xl text-neon mb-2 float-anim"></i>
+          <span class="font-semibold">Node.js</span>
+          <div class="progress-bar" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-fill" style="width:95%"></div>
+          </div>
+          <div class="tooltip">Backend, APIs, automações</div>
+        </div>
+        <div class="skill-card group" tabindex="0" data-skill="JavaScript">
+          <i class="fa-brands fa-js text-3xl text-accent mb-2 float-anim"></i>
+          <span class="font-semibold">JavaScript</span>
+          <div class="progress-bar" role="progressbar" aria-valuenow="92" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-fill" style="width:92%"></div>
+          </div>
+          <div class="tooltip">Web, Server, integrações</div>
+        </div>
+        <div class="skill-card group" tabindex="0" data-skill="Tailwind">
+          <i class="fa-brands fa-css3-alt text-3xl text-primary mb-2 float-anim"></i>
+          <span class="font-semibold">Tailwind CSS</span>
+          <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-fill" style="width:90%"></div>
+          </div>
+          <div class="tooltip">UI minimalista, responsivo</div>
+        </div>
+        <div class="skill-card group" tabindex="0" data-skill="MongoDB">
+          <i class="fa-solid fa-database text-3xl text-neon mb-2 float-anim"></i>
+          <span class="font-semibold">MongoDB/SQL</span>
+          <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-fill" style="width:80%"></div>
+          </div>
+          <div class="tooltip">Banco de dados, consultas</div>
+        </div>
+        <div class="skill-card group" tabindex="0" data-skill="APIs">
+          <i class="fa-solid fa-plug text-3xl text-primaryAlt mb-2 float-anim"></i>
+          <span class="font-semibold">APIs REST</span>
+          <div class="progress-bar" role="progressbar" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-fill" style="width:88%"></div>
+          </div>
+          <div class="tooltip">Integrações, endpoints</div>
+        </div>
+        <div class="skill-card group" tabindex="0" data-skill="Deploy">
+          <i class="fa-solid fa-cloud-arrow-up text-3xl text-accent mb-2 float-anim"></i>
+          <span class="font-semibold">Deploy Node</span>
+          <div class="progress-bar" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-fill" style="width:85%"></div>
+          </div>
+          <div class="tooltip">Hospedagem, automação</div>
+        </div>
+        <div class="skill-card group" tabindex="0" data-skill="WhatsApp">
+          <i class="fa-brands fa-whatsapp text-3xl text-neon mb-2 float-anim"></i>
+          <span class="font-semibold">Integrações WhatsApp</span>
+          <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-fill" style="width:80%"></div>
+          </div>
+          <div class="tooltip">Pedidos, notificações</div>
+        </div>
+        <div class="skill-card group" tabindex="0" data-skill="Arduino">
+          <i class="fa-solid fa-microchip text-3xl text-primaryAlt mb-2 float-anim"></i>
+          <span class="font-semibold">Arduino/Robótica</span>
+          <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-fill" style="width:60%"></div>
+          </div>
+          <div class="tooltip">Básico, automações físicas</div>
+        </div>
+      </div>
+    </section>
 
-  <!-- Objetivo -->
-  <section class="p-8 max-w-3xl mx-auto">
-    <h2 class="text-2xl font-bold mb-2 text-purple-300">Objetivo</h2>
-    <p>Atuar como <strong>desenvolvedor fullstack ou back-end</strong> em agências de marketing ou tecnologia, aplicando Node.js, automação e sistemas comerciais.</p>
-  </section>
+    <!-- Depoimentos -->
+    <section id="testimonials" class="bg-surface/80 py-20 px-4 relative">
+      <div id="particles-testimonials" class="absolute inset-0 -z-10"></div>
+      <h2 class="font-display text-3xl font-bold mb-10 text-primary text-center">Depoimentos</h2>
+      <div class="max-w-2xl mx-auto">
+        <div id="testimonial-slider" class="relative" aria-live="polite">
+          <!-- Slides via JS -->
+        </div>
+        <div class="flex justify-center gap-4 mt-6">
+          <button id="testimonial-prev" class="slider-btn" aria-label="Anterior">
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+          <button id="testimonial-next" class="slider-btn" aria-label="Próximo">
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contato -->
+    <section id="contact" class="max-w-3xl mx-auto py-20 px-4">
+      <h2 class="font-display text-3xl font-bold mb-8 text-primary text-center">Contato</h2>
+      <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mb-8">
+        <a href="https://wa.me/5562998641905" target="_blank" rel="noopener" class="btn-primary ripple flex items-center gap-2" aria-label="WhatsApp">
+          <i class="fa-brands fa-whatsapp"></i> WhatsApp
+        </a>
+        <a href="https://instagram.com/octaviouwx" target="_blank" rel="noopener" class="btn-secondary ripple flex items-center gap-2" aria-label="Instagram">
+          <i class="fa-brands fa-instagram"></i> @Octaviouwx
+        </a>
+      </div>
+      <form id="contact-form" class="bg-surface rounded-xl shadow-soft p-6 flex flex-col gap-4" action="https://formsubmit.co/silvaoctavio.23@gmail.com" method="POST" autocomplete="on" novalidate>
+        <!-- Para usar mailto, troque o action para "mailto:silvaoctavio.23@gmail.com" e remova os inputs hidden. -->
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="https://szbrdev.github.io/#contact">
+        <div>
+          <label for="name" class="block text-sm font-semibold mb-1">Nome</label>
+          <input id="name" name="name" type="text" required minlength="2" maxlength="40"
+            class="input transition-colors duration-200
+              bg-surface text-text border border-muted
+              focus:border-primary focus:ring-2 focus:ring-primary/30
+              dark:bg-surface dark:text-text dark:border-muted
+              light:bg-white light:text-zinc-900 light:border-zinc-300"
+            aria-required="true" aria-label="Nome">
+        </div>
+        <div>
+          <label for="email" class="block text-sm font-semibold mb-1">Email</label>
+          <input id="email" name="email" type="email" required
+            class="input transition-colors duration-200
+              bg-surface text-text border border-muted
+              focus:border-primary focus:ring-2 focus:ring-primary/30
+              dark:bg-surface dark:text-text dark:border-muted
+              light:bg-white light:text-zinc-900 light:border-zinc-300"
+            aria-required="true" aria-label="Email">
+        </div>
+        <div>
+          <label for="message" class="block text-sm font-semibold mb-1">Mensagem</label>
+          <textarea id="message" name="message" required minlength="5" maxlength="500" rows="4"
+            class="input transition-colors duration-200
+              bg-surface text-text border border-muted
+              focus:border-primary focus:ring-2 focus:ring-primary/30
+              dark:bg-surface dark:text-text dark:border-muted
+              light:bg-white light:text-zinc-900 light:border-zinc-300"
+            aria-required="true" aria-label="Mensagem"></textarea>
+        </div>
+        <button type="submit" class="btn-primary ripple w-full" aria-label="Enviar mensagem">Enviar</button>
+        <div id="form-success" class="hidden text-neon text-center font-semibold mt-2"></div>
+      </form>
+    </section>
+  </main>
 
   <!-- Footer -->
-  <footer class="p-6 text-center text-gray-400">
-    GitHub: <a href="https://github.com/SzBrDev" class="hover:text-purple-300 font-semibold">SzBrDev</a> &nbsp;|&nbsp; Email: <a href="mailto:silvaoctavio.23@gmail.com" class="hover:text-purple-300 font-semibold">silvaoctavio.23@gmail.com</a>
-    <div class="mt-2 text-xs text-gray-600">
-      <i class="fas fa-robot text-purple-400"></i> Portfólio visual estilo Bot UW Cloud &copy; 2025
+  <footer class="bg-surface/90 py-8 px-4 mt-12 relative">
+    <div id="particles-footer" class="absolute inset-0 -z-10"></div>
+    <div class="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <a href="https://github.com/SzBrDev" target="_blank" rel="noopener" class="footer-link" aria-label="GitHub SzBrDev">
+          <i class="fa-brands fa-github"></i> SzBrDev
+        </a>
+        <a href="mailto:silvaoctavio.23@gmail.com" class="footer-link" aria-label="Email Octávio">
+          <i class="fa-solid fa-envelope"></i> silvaoctavio.23@gmail.com
+        </a>
+      </div>
+      <div class="text-muted text-sm">
+        © 2025 Octávio Silva Mascarenhas. Feito com <span class="text-primary">Node.js</span> & <span class="text-accent">Tailwind</span>.
+      </div>
     </div>
   </footer>
+
+  <!-- Main JS -->
+  <script src="main.js" defer></script>
 </body>
 </html>
