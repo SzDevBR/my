@@ -69,28 +69,91 @@
     </noscript>
   </div>
 
-  <!-- Header/Nav -->
-  <header id="header" class="fixed top-0 left-0 w-full z-40 bg-bg/80 backdrop-blur transition-shadow">
+<!-- Header/Nav -->
+<header id="header" class="fixed top-0 left-0 w-full z-40 bg-bg/80 backdrop-blur transition-shadow">
     <nav class="max-w-5xl mx-auto flex items-center justify-between px-4 py-2" aria-label="Navegação principal">
-      <a href="#hero" class="flex items-center gap-2 focus:outline-primary" aria-label="Ir para início">
-        <span id="bot-mascot" class="text-primary text-2xl" tabindex="0" aria-label="Mascote robô" role="img">
-          <i class="fa-solid fa-robot"></i>
-        </span>
-        <span class="font-display font-bold text-lg hidden sm:inline">Octávio</span>
-      </a>
-      <ul class="flex gap-4" id="nav-links">
-        <li><a href="#about" class="nav-link" tabindex="0">Sobre</a></li>
-        <li><a href="#projects" class="nav-link" tabindex="0">Projetos</a></li>
-        <li><a href="#skills" class="nav-link" tabindex="0">Habilidades</a></li>
-        <li><a href="#testimonials" class="nav-link" tabindex="0">Depoimentos</a></li>
-        <li><a href="#contact" class="nav-link" tabindex="0">Contato</a></li>
-      </ul>
-      <button id="theme-toggle" class="ml-2 p-2 rounded-lg text-neon focus:outline-primary" aria-label="Alternar tema" title="Alternar tema">
-        <i class="fa-solid fa-moon"></i>
-      </button>
-      <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-primary text-bg px-3 py-1 rounded-lg z-50">Pular para conteúdo</a>
+        <a href="#hero" class="flex items-center gap-2 focus:outline-primary" aria-label="Ir para início">
+            <span id="bot-mascot" class="text-primary text-2xl" tabindex="0" aria-label="Mascote robô" role="img">
+                <i class="fa-solid fa-robot"></i>
+            </span>
+            <span class="font-display font-bold text-lg hidden sm:inline">Octávio</span>
+        </a>
+        <!-- Mobile menu button -->
+        <button id="nav-toggle" class="sm:hidden p-2 rounded-lg text-primary focus:outline-primary" aria-label="Abrir menu" aria-expanded="false">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <!-- Desktop Nav -->
+        <ul class="hidden sm:flex gap-4" id="nav-links">
+            <li><a href="#about" class="nav-link" tabindex="0">Sobre</a></li>
+            <li><a href="#projects" class="nav-link" tabindex="0">Projetos</a></li>
+            <li><a href="#skills" class="nav-link" tabindex="0">Habilidades</a></li>
+            <li><a href="#testimonials" class="nav-link" tabindex="0">Depoimentos</a></li>
+            <li><a href="#contact" class="nav-link" tabindex="0">Contato</a></li>
+        </ul>
+        <button id="theme-toggle" class="ml-2 p-2 rounded-lg text-neon focus:outline-primary" aria-label="Alternar tema" title="Alternar tema">
+            <i class="fa-solid fa-moon"></i>
+        </button>
+        <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-primary text-bg px-3 py-1 rounded-lg z-50">Pular para conteúdo</a>
     </nav>
-  </header>
+    <!-- Mobile Nav Drawer -->
+    <div id="mobile-menu" class="fixed inset-0 z-50 bg-bg/95 backdrop-blur-lg flex flex-col items-center justify-center gap-8 transition-all duration-300 opacity-0 pointer-events-none sm:hidden">
+        <button id="nav-close" class="absolute top-4 right-4 p-2 rounded-lg text-primary focus:outline-primary" aria-label="Fechar menu">
+            <i class="fa-solid fa-xmark fa-2x"></i>
+        </button>
+        <ul class="flex flex-col gap-6 text-xl font-semibold">
+            <li><a href="#about" class="nav-link-mobile" tabindex="0">Sobre</a></li>
+            <li><a href="#projects" class="nav-link-mobile" tabindex="0">Projetos</a></li>
+            <li><a href="#skills" class="nav-link-mobile" tabindex="0">Habilidades</a></li>
+            <li><a href="#testimonials" class="nav-link-mobile" tabindex="0">Depoimentos</a></li>
+            <li><a href="#contact" class="nav-link-mobile" tabindex="0">Contato</a></li>
+        </ul>
+    </div>
+    <style>
+        /* Mobile menu transitions */
+        #mobile-menu.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const navToggle = document.getElementById('nav-toggle');
+            const navClose = document.getElementById('nav-close');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const links = mobileMenu.querySelectorAll('a');
+
+            navToggle.addEventListener('click', () => {
+                mobileMenu.classList.add('open');
+                navToggle.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden';
+            });
+
+            navClose.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+                navToggle.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            });
+
+            // Close menu on link click
+            links.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('open');
+                    navToggle.setAttribute('aria-expanded', 'false');
+                    document.body.style.overflow = '';
+                });
+            });
+
+            // ESC to close
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
+                    mobileMenu.classList.remove('open');
+                    navToggle.setAttribute('aria-expanded', 'false');
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+    </script>
+</header>
 
   <!-- Main Content -->
   <main id="main-content" tabindex="-1" class="pt-20">
@@ -192,72 +255,79 @@
 
     <!-- Habilidades -->
     <section id="skills" class="max-w-5xl mx-auto py-20 px-4">
-      <h2 class="font-display text-3xl font-bold mb-10 text-primary text-center">Habilidades</h2>
+      <h2 class="font-display text-3xl font-bold mb-10 text-primary text-center">Habilidades Técnicas</h2>
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8">
-        <!-- Cada skill: ícone, nome, barra, tooltip -->
+        <!-- Node.js -->
         <div class="skill-card group" tabindex="0" data-skill="Node.js">
           <i class="fa-brands fa-node-js text-3xl text-neon mb-2 float-anim"></i>
           <span class="font-semibold">Node.js</span>
           <div class="progress-bar" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100">
             <div class="progress-fill" style="width:95%"></div>
           </div>
-          <div class="tooltip">Backend, APIs, automações</div>
+          <div class="tooltip">Desenvolvimento backend, APIs escaláveis, automação de processos</div>
         </div>
+        <!-- JavaScript -->
         <div class="skill-card group" tabindex="0" data-skill="JavaScript">
           <i class="fa-brands fa-js text-3xl text-accent mb-2 float-anim"></i>
           <span class="font-semibold">JavaScript</span>
           <div class="progress-bar" role="progressbar" aria-valuenow="92" aria-valuemin="0" aria-valuemax="100">
             <div class="progress-fill" style="width:92%"></div>
           </div>
-          <div class="tooltip">Web, Server, integrações</div>
+          <div class="tooltip">Aplicações web, integrações, lógica de negócios</div>
         </div>
+        <!-- Tailwind CSS -->
         <div class="skill-card group" tabindex="0" data-skill="Tailwind">
           <i class="fa-brands fa-css3-alt text-3xl text-primary mb-2 float-anim"></i>
           <span class="font-semibold">Tailwind CSS</span>
           <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
             <div class="progress-fill" style="width:90%"></div>
           </div>
-          <div class="tooltip">UI minimalista, responsivo</div>
+          <div class="tooltip">Interfaces modernas, responsivas e de alta performance</div>
         </div>
+        <!-- MongoDB/SQL -->
         <div class="skill-card group" tabindex="0" data-skill="MongoDB">
           <i class="fa-solid fa-database text-3xl text-neon mb-2 float-anim"></i>
-          <span class="font-semibold">MongoDB/SQL</span>
+          <span class="font-semibold">MongoDB / SQL</span>
           <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
             <div class="progress-fill" style="width:80%"></div>
           </div>
-          <div class="tooltip">Banco de dados, consultas</div>
+          <div class="tooltip">Modelagem de dados, consultas otimizadas, persistência</div>
         </div>
+        <!-- APIs REST -->
         <div class="skill-card group" tabindex="0" data-skill="APIs">
           <i class="fa-solid fa-plug text-3xl text-primaryAlt mb-2 float-anim"></i>
           <span class="font-semibold">APIs REST</span>
           <div class="progress-bar" role="progressbar" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100">
             <div class="progress-fill" style="width:88%"></div>
           </div>
-          <div class="tooltip">Integrações, endpoints</div>
+          <div class="tooltip">Integração de sistemas, criação de endpoints robustos</div>
         </div>
+        <!-- Deploy Node -->
         <div class="skill-card group" tabindex="0" data-skill="Deploy">
           <i class="fa-solid fa-cloud-arrow-up text-3xl text-accent mb-2 float-anim"></i>
-          <span class="font-semibold">Deploy Node</span>
+          <span class="font-semibold">Deploy Node.js</span>
           <div class="progress-bar" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
             <div class="progress-fill" style="width:85%"></div>
           </div>
-          <div class="tooltip">Hospedagem, automação</div>
+          <div class="tooltip">Hospedagem, automação de deploy, CI/CD</div>
         </div>
+        <!-- Integrações WhatsApp -->
         <div class="skill-card group" tabindex="0" data-skill="WhatsApp">
           <i class="fa-brands fa-whatsapp text-3xl text-neon mb-2 float-anim"></i>
           <span class="font-semibold">Integrações WhatsApp</span>
           <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
             <div class="progress-fill" style="width:80%"></div>
           </div>
-          <div class="tooltip">Pedidos, notificações</div>
+          <div class="tooltip">Automação de pedidos, notificações e atendimento</div>
         </div>
+        <!-- Arduino/Robótica -->
         <div class="skill-card group" tabindex="0" data-skill="Arduino">
           <i class="fa-solid fa-microchip text-3xl text-primaryAlt mb-2 float-anim"></i>
-          <span class="font-semibold">Arduino/Robótica</span>
+          <span class="font-semibold">Arduino / Robótica</span>
           <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
             <div class="progress-fill" style="width:60%"></div>
           </div>
-          <div class="tooltip">Básico, automações físicas</div>
+          <div class="tooltip">Prototipagem, automação física, integração IoT</div>
         </div>
       </div>
     </section>
@@ -292,10 +362,7 @@
           <i class="fa-brands fa-instagram"></i> @Octaviouwx
         </a>
       </div>
-      <form id="contact-form" class="bg-surface rounded-xl shadow-soft p-6 flex flex-col gap-4" action="https://formsubmit.co/silvaoctavio.23@gmail.com" method="POST" autocomplete="on" novalidate>
-        <!-- Para usar mailto, troque o action para "mailto:silvaoctavio.23@gmail.com" e remova os inputs hidden. -->
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_next" value="https://szbrdev.github.io/#contact">
+      <form id="contact-form" class="bg-surface rounded-xl shadow-soft p-6 flex flex-col gap-4" action="mailto:silvaoctavio.23@gmail.com" method="POST" enctype="text/plain" autocomplete="on">
         <div>
           <label for="name" class="block text-sm font-semibold mb-1">Nome</label>
           <input id="name" name="name" type="text" required minlength="2" maxlength="40"
@@ -329,6 +396,18 @@
         <button type="submit" class="btn-primary ripple w-full" aria-label="Enviar mensagem">Enviar</button>
         <div id="form-success" class="hidden text-neon text-center font-semibold mt-2"></div>
       </form>
+      <script>
+        // Mailto forms não funcionam bem em todos navegadores. Para garantir melhor UX, use JS para montar o mailto:
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+          e.preventDefault();
+          const name = encodeURIComponent(document.getElementById('name').value.trim());
+          const email = encodeURIComponent(document.getElementById('email').value.trim());
+          const message = encodeURIComponent(document.getElementById('message').value.trim());
+          const subject = encodeURIComponent('Contato via Portfólio');
+          const body = `Nome: ${name}%0AEmail: ${email}%0AMensagem: ${message}`;
+          window.location.href = `mailto:silvaoctavio.23@gmail.com?subject=${subject}&body=${body}`;
+        });
+      </script>
     </section>
   </main>
 
@@ -355,4 +434,5 @@
 </body>
 
 </html>
+
 
